@@ -136,7 +136,8 @@ module.exports = (() => {
       }
       else {
         console.log('Post created successfully!')
-        res.redirect('/')
+        // res.redirect('/')
+        res.status(409).send()        
       }
     })
   })

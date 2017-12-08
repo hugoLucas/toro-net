@@ -17,7 +17,7 @@
     </form>
     <button class="btn btn-primary" form="post" type="submit">Post</button>
     <hr>
-    <div class="postContainer" v-if="updatePosts">
+    <div class="postContainer" v-show="updatePosts">
       <a v-for="post in this.postList">
         <div class="container">
           <div class="row">
@@ -35,6 +35,22 @@
         <hr>
       </a>
     </div>
+    <!-- <a v-show="this.postsRetrieved" v-for="post in this.postList">
+    <div class="container">
+      <div class="row">
+        <h2 class="text-left">{{ post.title }}</h2> <br/>
+        <h4 class="text-left">{{ post.body }}</h4> <br/>
+        <div class="text-left col-xs-5">
+          {{ post.author }}
+        </div>
+        <div class="text-right col-xs-5 col-xs-push-2width">
+          {{ post.published }}
+        </div>
+        <button v-on:click="displayShortestPath(post)">Shortest Path</button>
+      </div>
+    </div>
+    <hr>
+    </a> -->
     <div class="noPostsContainer" v-else> You have no posts :( </div>
   </div>
   <div class="container" v-else>
