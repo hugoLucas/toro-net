@@ -159,61 +159,61 @@ module.exports = (() => {
   /* The User object returned by passport does not have userId, switched 
    * to username */
   router.get('/list/:username', checkAuth, (req, res) => {
-    // const queryString = 
-    //   `MATCH (u:User {username: '${req.params['username']}'})-[r:isFriends*1..1]-(v:User)
-    //   WHERE u <> v
-    //   RETURN r`
-    // const query = apoc.query(queryString)
+    const queryString = 
+      `MATCH (u:User {username: '${req.params['username']}'})-[r:isFriends*1..1]-(v:User)
+      WHERE u <> v
+      RETURN r`
+    const query = apoc.query(queryString)
     
-    // query.exec().then((result) => {
-    //   var resultMap = new Map()
+    query.exec().then((result) => {
+      var resultMap = new Map()
       
-    //   /* Do not change variables back to const!! */
-    //   for (var i = 0; i < result[0]['data'].length; i++) {
-    //     var dataList = result[0]['data'][i]['row'][0]
-    //     for (var j = 0; j < dataList.length; j++) {
-    //       var rowNames = dataList[j]['connects'].split('<-->')
-    //       rowNames = rowNames.sort()
-    //       if ( resultMap.has(rowNames[0]) ) {
-    //         if ( !resultMap.get(rowNames[0]).includes(rowNames[1]) ) {
-    //           resultMap.get(rowNames[0]).push(rowNames[1])
-    //         }
-    //       } else {
-    //         resultMap.set(rowNames[0], [rowNames[1]])
-    //       }
-    //     }
-    //   }
-      // var friendList = [] 
-      // resultMap.forEach((value, key) => {
-      //   friendList.push(value)
-      // })
-      // friendList[0].push(req.params['username'])
+      /* Do not change variables back to const!! */
+      for (var i = 0; i < result[0]['data'].length; i++) {
+        var dataList = result[0]['data'][i]['row'][0]
+        for (var j = 0; j < dataList.length; j++) {
+          var rowNames = dataList[j]['connects'].split('<-->')
+          rowNames = rowNames.sort()
+          if ( resultMap.has(rowNames[0]) ) {
+            if ( !resultMap.get(rowNames[0]).includes(rowNames[1]) ) {
+              resultMap.get(rowNames[0]).push(rowNames[1])
+            }
+          } else {
+            resultMap.set(rowNames[0], [rowNames[1]])
+          }
+        }
+      }
+      var friendList = [] 
+      resultMap.forEach((value, key) => {
+        friendList.push(value)
+      })
+      friendList[0].push(req.params['username'])
       
-      // Post.find().where('username').in(friendList[0]).exec(function (err, records) {
-      //   if (err) {
-      //     console.log("Error: ", err)
-      //     res.status(400).send()
-      //   } else {
-      //     console.log('Post Successfully Retrived')
-      //     console.log(records)
-      //     res.send(records)
-      //   }
-      // })
-
-      Post.find({ 'username': req.params['username'] }, (err, result) => {
+      Post.find().where('username').in(friendList[0]).exec(function (err, records) {
         if (err) {
           console.log("Error: ", err)
-          res.status(200).send()
-        }
-        else {
+          res.status(400).send()
+        } else {
           console.log('Post Successfully Retrived')
-          console.log(result)
-          res.send(result)
+          console.log(records)
+          res.send(records)
         }
       })
-    // }, (fail) => {
-    //   console.log(fail) 
-    // })
+
+      // Post.find({ 'username': req.params['username'] }, (err, result) => {
+      //   if (err) {
+      //     console.log("Error: ", err)
+      //     res.status(200).send()
+      //   }
+      //   else {
+      //     console.log('Post Successfully Retrived')
+      //     console.log(result)
+      //     res.send(result)
+      //   }
+      // })
+    }, (fail) => {
+        console.log(fail) 
+    })
   })    
   
   return router
