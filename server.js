@@ -17,7 +17,7 @@ require('dotenv').load();
 require('./passport')(passport)
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://admin:admin@ds119064.mlab.com:19064/hugos_first_app_73726');
+mongoose.connect(process.env.MONGO_URI);
 
 let app = express()
 
