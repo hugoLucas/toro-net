@@ -58,6 +58,7 @@ export default {
             createdOn: new Date
           }
           this.$store.dispatch('registerUser', newUser).then(res => {
+            console.log(res.status)
             if (res.status == 409) {
               if (res.statusText == 'username') {
                 this.errors.add('username', 'This username is already taken.', 'auth')
@@ -70,7 +71,7 @@ export default {
             }
             else if (res.status == 200) {
               alert('Registration successful!')
-              this.$router.push('/login')
+              window.location.href="/login" ;
             }
           }, err => {
             alert('Registration failed!')
