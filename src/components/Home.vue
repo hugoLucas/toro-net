@@ -17,8 +17,8 @@
     </form>
     <button class="btn btn-primary" form="post" type="submit">Post</button>
     <hr>
-    <h5>{{ testPostLogic }}</h5>
-    <!-- <div class="postContainer" v-show="updatePosts">
+    <!-- <h5>{{ testPostLogic }}</h5> -->
+    <div class="postContainer" v-show="updatePosts">
       <a v-for="post in this.postList">
         <div class="container">
           <div class="row">
@@ -35,7 +35,7 @@
         </div>
         <hr>
       </a>
-    </div> -->
+    </div>
     <!-- <a v-show="this.postsRetrieved" v-for="post in this.postList">
     <div class="container">
       <div class="row">
